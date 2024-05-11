@@ -26,6 +26,7 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    image: jericho-penugasan-3-php
     build:
       target: php
       context: .
@@ -42,6 +43,8 @@ services:
     container_name: migration
     command: php artisan migrate:fresh --seed
     depends_on:
+      php:
+        condition: service_started
       mysql:
         condition: service_healthy
     restart: on-failure
