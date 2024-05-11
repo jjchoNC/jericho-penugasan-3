@@ -27,4 +27,10 @@ RUN chown -R www-data:www-data .
 
 RUN php artisan key:generate
 
+RUN php artisan config:clear
+
+RUN php artisan config:cache
+
 RUN yarn
+
+RUN yarn build
