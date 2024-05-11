@@ -33,4 +33,6 @@ RUN php artisan config:cache
 
 RUN yarn
 
+RUN php artisan storage:link
+
 RUN yarn build
