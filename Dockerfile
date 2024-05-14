@@ -12,7 +12,7 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache yarn
+RUN apk add yarn
 
 COPY . /var/www/html/
 
