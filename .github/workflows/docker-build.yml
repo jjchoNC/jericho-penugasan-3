@@ -6,24 +6,13 @@ on:
       - 'main'
 
 jobs:
+  permissions: write-all
   docker:
     runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
         uses: actions/checkout@v4
-      -
-        name: Cache Composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache
-          key: composer-${{ hashFiles('**/composer.lock') }}
-      -
-        name: Cache Yarn/npm dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.yarn/cache
-          key: yarn-${{ hashFiles('**/yarn.lock') }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -42,6 +31,7 @@ jobs:
         with:
           context: .
           push: true
+          load: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
