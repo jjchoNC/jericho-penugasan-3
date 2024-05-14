@@ -54,17 +54,17 @@ jobs:
         target: "."
         strip_components: 1
     - 
-        name: Copy nginx.conf to remote server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          source: "./nginx.conf"
-          target: "."
-          strip_components: 1
-      -
+      name: Copy nginx.conf to remote server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "./nginx.conf"
+        target: "."
+        strip_components: 1
+    -
       name: executing remote ssh commands using private key
       uses: appleboy/ssh-action@v1.0.3
       with:
