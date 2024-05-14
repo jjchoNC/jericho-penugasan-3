@@ -36,6 +36,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           cache-from: type=gha,scope=ci-docker-cache
@@ -55,7 +56,8 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         source: 'docker-compose.yml'
-        target: '/home/jjcho/'
+        target: ${{ secrets.WORK_DIR }}
+        strip_components: 1
     - 
       name: executing remote ssh commands using private key
       uses: appleboy/ssh-action@v1.0.3
