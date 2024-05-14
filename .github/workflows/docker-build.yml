@@ -43,8 +43,8 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
-          cache-from: type=gha,scope=ci-docker-cache
-          cache-to: type=gha,mode=max,scope=ci-docker-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       
   deploy:
     name: Deploy
