@@ -12,14 +12,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v4
-      - 
-        name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -56,7 +48,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         source: "docker-compose.yml"
-        target: ${{ secrets.WORK_DIR }}
+        target: "."
         strip_components: 1
     - 
       name: executing remote ssh commands using private key
