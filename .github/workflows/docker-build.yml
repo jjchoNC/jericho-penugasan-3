@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       -
@@ -29,3 +32,16 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      name: executing remote ssh commands using private key
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
