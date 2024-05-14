@@ -6,8 +6,8 @@ on:
       - 'main'
 
 jobs:
-  permissions: write-all
   docker:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       -
