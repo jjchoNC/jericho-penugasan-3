@@ -4,13 +4,10 @@ services:
   mysql:
     image: mysql:5.7
     container_name: mysql
-    env_file:
-      - path: ".env"
     environment:
-      MYSQL_HOST: $DB_HOST
-      MYSQL_DATABASE: $DB_DATABASE
-      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: pbkk
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_HOST: mysql
     ports:
       - "3306:3306"
     networks:
@@ -26,20 +23,15 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    image: jericho-penugasan-3-php
-    build:
-      target: php
-      context: .
+    image: jjch0nc/jericho-penugasan-3
     networks:
       - laravel-net
     restart: on-failure
-    ports:
-      - "5173:5173"
     volumes:
       - app:/var/www/html
 
   migration:
-    image: jericho-penugasan-3-php
+    image: jjch0nc/jericho-penugasan-3
     container_name: migration
     command: php artisan migrate:fresh --seed
     depends_on:

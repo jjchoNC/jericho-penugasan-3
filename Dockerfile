@@ -8,8 +8,7 @@ RUN apk update && apk add \
     unzip \
     git
 
-RUN docker-php-ext-install pdo pdo_mysql \
-    && apk --no-cache add nodejs npm
+RUN docker-php-ext-install pdo pdo_mysql
 
 WORKDIR /var/www/html
 
@@ -17,13 +16,15 @@ RUN apk add --no-cache yarn
 
 COPY . /var/www/html/
 
+COPY .env.example .env
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install
 
-RUN chmod 775 -R .
+RUN chmod -R 777 storage bootstrap/cache
 
-RUN chown -R www-data:www-data .
+RUN chown -R www-data:www-data /var/www/html
 
 RUN php artisan key:generate
 
