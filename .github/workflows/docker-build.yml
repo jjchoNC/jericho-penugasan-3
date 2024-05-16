@@ -55,10 +55,10 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         source: |
-          "./docker-compose.yml"
-          "./installer.sh"
+          ./docker-compose.yml
+          ./installer.sh
         target: "."
-        strip_components: 1
+        strip_components: 2
     -
       name: executing remote ssh commands using private key
       uses: appleboy/ssh-action@v1.0.3
