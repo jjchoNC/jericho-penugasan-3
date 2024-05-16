@@ -6,9 +6,9 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Running php artisan migrate..."
-php artisan migrate
+php artisan migrate --seed
 if [ $? -ne 0 ]; then
-  echo "yarn build failed"
+  echo "migration failed"
   exit 1
 fi
 
