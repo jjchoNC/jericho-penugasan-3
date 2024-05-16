@@ -25,5 +25,3 @@ RUN yarn
 RUN chmod -R 777 storage bootstrap/cache
 
 RUN chown -R www-data:www-data /var/www/html
-
-RUN yarn build
