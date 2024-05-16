@@ -58,7 +58,6 @@ jobs:
           ./docker-compose.yml
           ./installer.sh
         target: "."
-        strip_components: 2
     -
       name: executing remote ssh commands using private key
       uses: appleboy/ssh-action@v1.0.3
