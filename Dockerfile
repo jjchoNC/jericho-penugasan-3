@@ -18,7 +18,7 @@ COPY .env.example .env
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN --mount=type=cache,target=/root/.composer/cache composer install
+RUN composer install
 
 RUN chmod -R 777 storage bootstrap/cache
 

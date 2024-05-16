@@ -37,5 +37,35 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           cache-from: type=gha,scope=build
           cache-to: type=gha,scope=build,mode=max
-          cache-map: |
-            /root/.composer/cache: composer-cache
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v4
+    - 
+      name: Copy docker-compose.yml to remote server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "./docker-compose.yml"
+        target: "."
+        strip_components: 1
+    -
+      name: executing remote ssh commands using private key
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
+          docker compose down
+          docker compose up -d
+          docker exec -i php /bin/sh -c "composer install && php artisan migrate --seed && yarn && yarn build && php artisan key:generate && php artisan config:clear && php artisan config:cache && php artisan storage:link"

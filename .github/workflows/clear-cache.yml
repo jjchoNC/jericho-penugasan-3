@@ -1,0 +1,18 @@
+name: Clear Cache
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear Cache
+        uses: actions/cache@v2
+        with:
+          path: .
+          key: ${{ runner.os }}-clear-cache 
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: Check out code
+        uses: actions/checkout@v2
