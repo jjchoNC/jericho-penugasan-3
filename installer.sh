@@ -1,6 +1,6 @@
 until docker exec mysql mysqladmin ping -h "localhost" --silent; do
     echo "Waiting for MySQL to be ready..."
-    sleep 1
+    sleep 0.5
 done
 
 docker exec -i php php artisan config:clear

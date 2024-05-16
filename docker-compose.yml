@@ -12,17 +12,11 @@ services:
       - "3306:3306"
     networks:
       - laravel-net
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
 
   php:
     container_name: php
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     image: jjch0nc/jericho-penugasan-3
     networks:
       - laravel-net
@@ -42,7 +36,7 @@ services:
     networks:
       - laravel-net
     depends_on:
-      - php
+      - mysql
     restart: on-failure
 
 volumes:
