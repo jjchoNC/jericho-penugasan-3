@@ -2,8 +2,6 @@ FROM php:8.2-fpm-alpine as php
 
 RUN apk update && apk add \
     curl \
-    libpng-dev \
-    libxml2-dev \
     zip \
     unzip \
     git
@@ -20,7 +18,7 @@ COPY .env.example .env
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --no-progress --no-dev --prefer-dist --optimize-autoloader --no-suggest
+RUN --mount=type=cache,target=/root/.composer/cache composer install
 
 RUN chmod -R 777 storage bootstrap/cache
 
