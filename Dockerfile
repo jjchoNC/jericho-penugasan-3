@@ -14,7 +14,7 @@ COPY .env.example .env
 
 COPY ./src/ /var/www/html/
 
-COPY ./install.sh /var/www/html/
+COPY ./installer.sh /var/www/html/
 
 WORKDIR /var/www/html
 
