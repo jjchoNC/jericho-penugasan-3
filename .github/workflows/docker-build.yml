@@ -75,13 +75,4 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           docker compose down
           docker compose up -d
-          docker exec -it php /bin/sh -c "
-          composer install &&
-          php artisan migrate --seed &&
-          yarn &&
-          yarn build &&
-          php artisan key:generate &&
-          php artisan config:clear &&
-          php artisan config:cache &&
-          php artisan storage:link
-          "
+          docker exec -it php /bin/sh -c "composer install && php artisan migrate --seed && yarn && yarn build && php artisan key:generate && php artisan config:clear && php artisan config:cache && php artisan storage:link"
