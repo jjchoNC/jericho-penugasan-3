@@ -29,6 +29,7 @@ services:
     restart: on-failure
     volumes:
       - app:/var/www/html
+    command: php-fpm
 
   nginx:
     image: nginx:alpine
