@@ -30,21 +30,6 @@ services:
     volumes:
       - app:/var/www/html
 
-  migration:
-    image: jjch0nc/jericho-penugasan-3
-    container_name: migration
-    command: php artisan migrate:fresh --seed
-    depends_on:
-      php:
-        condition: service_started
-      mysql:
-        condition: service_healthy
-    restart: on-failure
-    networks:
-      - laravel-net
-    volumes:
-      - app:/var/www/html
-
   nginx:
     image: nginx:alpine
     container_name: nginx

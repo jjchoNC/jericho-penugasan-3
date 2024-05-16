@@ -86,3 +86,4 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           docker compose down
           docker compose up -d
+          docker exec -it php /bin/sh installer.sh

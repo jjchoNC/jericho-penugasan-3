@@ -25,15 +25,3 @@ RUN composer install --no-progress --no-dev --prefer-dist --optimize-autoloader 
 RUN chmod -R 777 storage bootstrap/cache
 
 RUN chown -R www-data:www-data /var/www/html
-
-RUN php artisan key:generate
-
-RUN php artisan config:clear
-
-RUN php artisan config:cache
-
-RUN yarn
-
-RUN php artisan storage:link
-
-RUN yarn build
