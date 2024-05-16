@@ -40,7 +40,7 @@ jobs:
           context: .
           push: true
           load: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           cache-from: type=gha,scope=build
           cache-to: type=gha,scope=build,mode=max
       
@@ -63,17 +63,6 @@ jobs:
         source: "./docker-compose.yml"
         target: "."
         strip_components: 1
-    - 
-      name: Copy nginx.conf to remote server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        source: "./nginx.conf"
-        target: "."
-        strip_components: 1
     -
       name: executing remote ssh commands using private key
       uses: appleboy/ssh-action@v1.0.3
@@ -86,4 +75,4 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           docker compose down
           docker compose up -d
-          docker exec -it php /bin/sh installer.sh
+          docker run -it --name php ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest /bin/sh -c "sh installer.sh"
