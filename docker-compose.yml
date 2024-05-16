@@ -37,6 +37,7 @@ services:
       - laravel-net
     depends_on:
       - mysql
+      - php
     restart: on-failure
 
 volumes:

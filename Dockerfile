@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN composer install --no-dev --no-interaction --no-progress --no-suggest --quiet
 
-RUN yarn && yarn build
+RUN yarn --silent && yarn build --silent
 
 RUN chmod -R 777 storage bootstrap/cache && \
     chown -R www-data:www-data /var/www/html
