@@ -54,7 +54,9 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: "./docker-compose.yml"
+        source: |
+          "./docker-compose.yml"
+          "./installer.sh"
         target: "."
         strip_components: 1
     -
@@ -69,4 +71,4 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           docker compose down
           docker compose up -d
-          docker run -d php
+          sh installer.sh

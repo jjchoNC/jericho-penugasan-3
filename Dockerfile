@@ -29,5 +29,3 @@ RUN chmod -R 777 storage bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html
 
 RUN yarn build
-
-ENTRYPOINT ["php", "artisan", "migrate", "--seed"]
