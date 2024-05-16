@@ -69,4 +69,3 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
           docker compose down
           docker compose up -d
-          docker exec -i php /bin/sh -c "sh /var/www/html/installer.sh"
