@@ -20,6 +20,7 @@ services:
 
   php:
     container_name: php
+    tty: true
     depends_on:
       mysql:
         condition: service_healthy
