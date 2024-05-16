@@ -65,5 +65,5 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jericho-penugasan-3:latest
-          docker
+          docker compose up --force-recreate -d
           sh installer.sh
