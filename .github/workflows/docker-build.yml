@@ -69,4 +69,3 @@ jobs:
           docker compose down
           docker compose up -d
           sh installer.sh
-          docker exec -i php yarn build
