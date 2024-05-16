@@ -29,8 +29,6 @@ services:
     restart: on-failure
     volumes:
       - app:/var/www/html
-    tty: true
-    command: /bin/sh -c "sh /var/www/html/installer.sh; tail -f /dev/null"
 
   nginx:
     image: nginx:alpine
