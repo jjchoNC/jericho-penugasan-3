@@ -45,3 +45,11 @@ Instruksi selanjutnya adalah `RUN yarn && yarn build`. Yang mana `yarn` akan men
 Jika semua sudah, perlu juga untuk melakukan pengaturan izin (`chmod`) dan kepemilikan file (`chown`).
 
 
+## Docker Container <a name="DockerContainer"></a>
+Terdapat 3 container, yaitu container `mysql`, `php`, dan `nginx`. Container `mysql`berguna untuk mengatur/menyiapakan database yang nanti akan digunakan pada projek. Untuk nama database dan juga nama host dideklarasikan pada bagian `environment`.
+
+Selanjutnya, container `php` berguna untuk menjalankan aplikasi web (BE & FE). Container `php` baru akan berjalan setelah container `mysql` dijalankan karena digunakannya kondisi `depends-on`. Container ini menggunakan image dari image hasil build Dockerfile dan service container akan dimulai ulang hanya jika mengalmai kondisi error.
+
+Container terakhir yang digunakan adalag container `nginx` yang bertindak sebagai reverse proxy. Jalannya container ini bergantung kepada container `mysql` dan `php`. Selain itu, container ini juga menggunakan `volume` untuk berbagi data dan juga untk mengaitkan file konfigurasi nginx dari lokal  ke kontainer.
+
+Perlu diingat bahwa semua container berjalan pada networks yang sama, yaitu network `laravel-net`.
