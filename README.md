@@ -156,4 +156,11 @@ docker exec -i php php artisan migrate --seed
 
 Script tersebut akan dijalankan pada bagian paling akhir proses deployment.
 
+![image](https://github.com/jjchoNC/jericho-penugasan-3/assets/115205053/bf29226a-54dc-4db9-99cf-2d9cf4e4f742)
+
+![image](https://github.com/jjchoNC/jericho-penugasan-3/assets/115205053/9e582d35-c6c6-453f-86f9-786ef28d2839)
+
 ## Screenshoot <a name="Screenshoots"></a>
+
+![image](https://github.com/jjchoNC/jericho-penugasan-3/assets/115205053/64ae39a5-92e5-4d4f-9bab-e92211b186ae)
+
