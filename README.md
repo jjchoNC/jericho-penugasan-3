@@ -108,7 +108,7 @@ Sangat penting untuk memisahkan file projek dan file-file lainnya yang tidak ber
 
 Setelah image berhasil dibuild dan dipush, sudah waktunya untuk dilakukan deploy ke server. Kali ini, saya menggunakan VM MS Azure yang nantinya terhubung melalui SSH. Agar web yang dideploy bisa dibuka, maka kita perlu mengallow port 80 pada settingan network di VM Azure.
 
-
+![image](https://github.com/jjchoNC/jericho-penugasan-3/assets/115205053/0e119e62-9827-4f11-bc58-a180b7e96f78)
 
 ```yml
 deploy:
