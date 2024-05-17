@@ -1,8 +1,11 @@
+
+
+---
 # Daftar Isi
 1. [Dockerfile](#Dockerfile)
 2. [Docker Container](#DockerContainer)
 3. [CI/CD](#CICD)
-3. [Screenshoots](#Screenshoots)
+4. [Screenshoots](#Screenshoots)
 ---
 
 ## Dockerfile <a name="Dockerfile"></a>
@@ -103,7 +106,9 @@ Pertama, proyek di-checkout menggunakan action `actions/checkout@v4` untuk menga
 
 Sangat penting untuk memisahkan file projek dan file-file lainnya yang tidak berhubungan. Karena cache tidak akan digunakan bila ada perubahan pada layer image, layer image perlu melakukan rebuilt, sehingga layer-layer selanjutnya tidak akan menggunakan cache. Kondisi ini sangat rawan apabila kita menggunakan instruksi `COPY . <dir>` pada Dockerfile, apabila file-file dijadikan satu maka sangat rawan untuk gagal menggunakan cache [[source](https://docs.docker.com/build/cache/)].
 
-Setelah image berhasil dibuild dan dipush, sudah waktunya untuk dilakukan deploy ke server. Kali ini, saya menggunakan VM MS Azure yang nantinya terhubung melalui SSH.
+Setelah image berhasil dibuild dan dipush, sudah waktunya untuk dilakukan deploy ke server. Kali ini, saya menggunakan VM MS Azure yang nantinya terhubung melalui SSH. Agar web yang dideploy bisa dibuka, maka kita perlu mengallow port 80 pada settingan network di VM Azure.
+
+
 
 ```yml
 deploy:
@@ -112,7 +117,7 @@ deploy:
     runs-on: ubuntu-latest
     steps:
         -
-            name: Checkout
+            name: Checkout 
             uses: actions/checkout@v4
         - 
             name: Copy docker-compose.yml to remote server
@@ -138,7 +143,7 @@ deploy:
                 sh installer.sh
 ```
 
-Proses deploy akan akan berjalan setelah proses build selesai. Sama dengan proses sebelumnya, langkah pertama yang dilakukan adalah melakukan checkout. Setelah melakukan checkout, file docker-compose.yml, installer.sh, dan nginx.conf perlu ada didalam VM. Oleh karena itu, untuk menyalinnya, bisa menggunakan action `appleboy/scp-action@v0.1.7` untuk melakukan transfer file melalui SSH. Setelah semua file diatas berhasil di transfer, kita perlu mengunduh image yang sudah dibuild dan memulai semua container yang sudah di setting pada docker-compose.yml. Untuk melakukannya kita perlu untuk masuk ke dalam VM melalui SSH, pada kasus ini kita bisa menggunakan action `appleboy/ssh-action@v1.0.3` dan melakukan perintah docker seperti di atas dan pastikan bahwa VM sudah terinstall Docker. 
+Proses deploy akan akan berjalan setelah proses build selesai. Sama dengan proses sebelumnya, langkah pertama yang dilakukan adalah melakukan checkout. Setelah melakukan checkout, file docker-compose.yml, installer.sh, dan nginx.conf perlu ada didalam VM. Oleh karena itu, untuk menyalinnya, bisa menggunakan action `appleboy/scp-action@v0.1.7` untuk melakukan transfer file melalui SSH. Setelah semua file diatas berhasil di transfer, kita perlu mengunduh image yang sudah dibuild dan memulai semua container yang sudah di setting pada docker-compose.yml. Untuk melakukannya kita perlu untuk masuk ke dalam VM melalui SSH, pada kasus ini kita bisa menggunakan action `appleboy/ssh-action@v1.0.3` dan melakukan perintah docker seperti di atas dan pastikan bahwa VM sudah terinstall Docker. Sebagai catatan, nilai `secrets.HOST` harus di set ke public IP VM yang kita gunakan.
 
 Setelah image berhasil di pull dan semua container berhasil di muali, kita perlu melakukan migrasi database dan menanamkan data awal dengan perintah ( `php artisan migrate` ). Pada kasus ini perlu diperhatikan bahwa melakukan migrasi database berhubungan dengan dua container yaitu container `mysql` dan container `php`, agar tidak terjadi race condition, maka kita perlu menunggu service `mysql` siap dan barulah kita menjalankan proses di atas. Oleh karena itu, saya membuat script sederhana dengan melakukan `mysqladmin ping` hingga service mysql sudah siap.
 
